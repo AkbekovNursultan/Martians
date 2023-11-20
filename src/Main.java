@@ -7,27 +7,28 @@ public class Main {
        int firstBox = ran.nextInt(200) + 100;
        int secondBox = ran.nextInt(200) + 100;
        int thirdBox = 713 - firstBox- secondBox;
+       int attempts = 5;
+       int[] possibleLocations = new int[6];
+       locations(possibleLocations);
+       putBox(firstBox, possibleLocations);
+       putBox(secondBox, possibleLocations);
+       putBox(thirdBox, possibleLocations);
        while(true) {
-           int[] possibleLocations = new int[6];
-           locations(possibleLocations);
-           putBox(firstBox, possibleLocations);
-           putBox(secondBox, possibleLocations);
-           putBox(thirdBox, possibleLocations);
            System.out.println("\nEnter the first coordinate from 1 to 6: ");
            int firstGuess = sc.nextInt() - 1;
-           while (firstGuess < 0 || firstGuess > 6) {
+           while (firstGuess < 0 || firstGuess > 5) {
                System.out.println("Invalid coordinates. ");
                firstGuess = sc.nextInt() - 1;
            }
            System.out.println("Enter the second coordinate from 1 to 6: ");
            int secondGuess = sc.nextInt() - 1;
-           while (secondGuess < 0 || secondGuess > 6 || secondGuess == firstGuess) {
+           while (secondGuess < 0 || secondGuess > 5 || secondGuess == firstGuess) {
                System.out.println("Invalid coordinates. ");
                secondGuess = sc.nextInt() - 1;
            }
            System.out.println("Enter the third coordinate from 1 to 6: ");
            int thirdGuess = sc.nextInt() - 1;
-           while (thirdGuess < 0 || thirdGuess > 6 || thirdGuess == firstGuess || thirdGuess == secondGuess) {
+           while (thirdGuess < 0 || thirdGuess > 56 || thirdGuess == firstGuess || thirdGuess == secondGuess) {
                System.out.println("Invalid coordinates. ");
                thirdGuess = sc.nextInt() - 1;
            }
@@ -41,10 +42,22 @@ public class Main {
            } else {
                System.out.println("Damn you are bad at it!");
            }
+           attempts--;
+           if(attempts != 0) {
+               System.out.println("WARNING! " + attempts + " more attempts before boxes change locations.");
+           }
+           if(attempts == 0){
+               locations(possibleLocations);
+               putBox(firstBox, possibleLocations);
+               putBox(secondBox, possibleLocations);
+               putBox(thirdBox, possibleLocations);
+               attempts = 5;
+               System.out.println("ATTENTION! Boxes have changed locations.\nAttempts number has been reset!");
+           }
        }
         System.out.println("Yaay! U found them all!");
         System.out.println("Their weights are:");
-        System.out.println(firstBox + " " + secondBox + " " + thirdBox);
+        System.out.println(firstBox + ", " + secondBox + ", " + thirdBox);
     }
     static void putBox(int box, int[] possibleLocations){
         Random ran = new Random();
